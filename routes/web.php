@@ -14,3 +14,15 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+
+
+
+Auth::routes();
+
+
+Route::get('/home','Admin\AdminController@home') ->middleware('auth')->name('home');
+Route::get('/details','Admin\AdminController@details') ->middleware('auth')->name('AddDetails');
+Route::post('/update','Admin\Admincontroller@updatedetails')->name('updateprofile');
+Route::get('/viewprofile/{id}','Admin\AdminController@viewprofile') ->middleware('auth')->name('viewprofile');
