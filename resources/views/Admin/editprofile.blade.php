@@ -1,4 +1,4 @@
-@section('title','Add profile')
+@section('title','Edit profile')
 @extends('Admin.layouts.header')
 @section('content-section')
 
@@ -7,7 +7,7 @@
   <div class="">
     <div class="page-title">
       <div class="title_left">
-        <h3>Add Profile Details</h3>
+        <h3>Edit Profile Details</h3>
       </div>
 
 
@@ -17,7 +17,7 @@
       <div class="col-md-12 col-sm-12 ">
         <div class="x_panel">
           <div class="x_title">
-            <h2>Profie <small>Update Profile</small></h2>
+            <h2>Profie <small>Edit Profile</small></h2>
 
             <div class="clearfix"></div>
           </div>
@@ -29,22 +29,42 @@
 
 </div>
 @endif
-            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data" method="post" action="{{Route('updateprofile')}}">
+            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data" method="post" action="{{Route('editprofile',[Auth::user()->id])}}">
               {{csrf_field()}}
               <input type="hidden" value="{{Auth::user()->id}}" name="userid" />
+              <div class="row">
+              <div class="col-lg-2 col-md-2">
+                        <div class="profile-img" style="position: relative; ">
+                            <div style="position: absolute; top:70%;left:33%;color:white;font-size:15px;">Change photo</div>
+                            
+                            
+                           
+                      
 
-              <div class="item form-group">
+                            <img src="{{asset('admin/images/'.$user->userDetail->image)}}" alt="" style="width: 282px; height:230px;"/>
+                            
+                          
+                            
+                            <div class="file btn btn-sm btn-primary">
+                                <input type="file" name="file"/>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                  <div class="col-lg-10 col-md-9">
+                  <div class="item form-group">
                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">First Name <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 ">
-                  <input type="text" id="first-name" required="required" class="form-control " name="fname">
+                  <input type="text" id="first-name" required="required" class="form-control " value="{{$user->userDetail->first_name}}" name="fname">
                 </div>
               </div>
               <div class="item form-group">
                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">Last Name <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 ">
-                  <input type="text" id="last-name" name="lname" required="required" class="form-control">
+                  <input type="text" id="last-name" name="lname" required="required" value="{{$user->userDetail->last_name}}" class="form-control">
                 </div>
               </div>
                <div class="item form-group ">
@@ -61,26 +81,21 @@
                   </label>
                 </div>
               </div>
-              <div class="item form-group">
-                <label for="middle-name" class="col-form-label col-md-3 col-sm-3 label-align">Upload Image</label>
-                <div class="col-md-6 col-sm-6 ">
-                  <input id="middle-name" class="form-input" type="file" name="image">
-                </div>
-              </div>
+              
 
              
               <div class="item form-group">
                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Address <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 ">
-                  <input type="text" id="first-name" required="required" class="form-control " name="address">
+                  <input type="text" id="first-name" required="required" class="form-control " value="{{$user->userDetail->address}}" name="address">
                 </div>
               </div>
               <div class="item form-group">
                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Phone <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 ">
-                  <input type="number" id="first-name" required="required" class="form-control " name="phone">
+                  <input type="number" id="first-name" required="required" value="{{$user->userDetail->phone}}" class="form-control " name="phone">
                 </div>
               </div>
               <div class="item form-group ">
@@ -97,6 +112,9 @@
                   </label>
                 </div>
               </div>
+                  </div>
+              </div>
+              
               
 
 
@@ -105,8 +123,8 @@
 
               <div class="ln_solid"></div>
               <div class="item form-group">
-                <div class="col-md-6 col-sm-6 offset-md-3">
-                  <button type="submit" class="btn btn-success">Add Details</button>
+                <div class="col-md-6 col-sm-6 offset-md-3 " style="margin-left:40%;">
+                  <button type="submit" class="btn btn-success">Update Profile</button>
                   <button class="btn btn-primary" type="button">Cancel</button>
                   <button class="btn btn-primary" type="reset">Reset</button>
                   

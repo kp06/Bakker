@@ -10,7 +10,7 @@
 <!------ Include the above in your HEAD tag ---------->
 
  <div class="right_col" role="main">
-            <form method="post">
+            
                 <div class="row">
                     <div class="col-md-3">
                         <div class="profile-img">
@@ -38,8 +38,8 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <a  href="#"><button class="profile-edit-btn btn-light"> Edit Profile</button></a>
+                    <div class="col-md-3">
+                        <a  href="{{Route('showeditprofile',[Auth::user()->id])}}"><button class="profile-edit-btn btn-light"> Edit Profile</button></a>
                     </div>
                 </div>
                 <div class="row">
@@ -169,7 +169,7 @@
                         </div>
                     </div>
                 </div>
-            </form>           
+                       
         </div>
 
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Model\Userdetail;
+use App\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -42,6 +43,7 @@ class AdminController extends Controller
                 'phone' => $request->get('phone'),
                 'user_id' => $request->get('userid'),
                 'image' => $image,
+                'is_staff' => $request->get('staff'),
 
             ]);
               $request -> session() ->flash('success-message','details added successfully');
@@ -85,10 +87,44 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showedit($id)
     {
-        //
+        $nid=$id;
+
+       $user = User::with(['userDetail'])->where('id',$id)->first();
+            
+        return view('Admin.editprofile',['user' => $user]);
+
     }
+    public function actEditProfile(Request $request,$id)
+    {
+        $addImage = UserDetail::find($id);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $image = sha1(time()) . "." . $file->getClientOriginalExtension();
+            $file->move('admin/images/', $image);
+            if ($addImage->images) {
+                unlink('admin/images/' . $addImage->image);
+            }
+            $addImage->images = $image;
+        }
+        $addImage->update([
+            'first_name' => $request->get('fname'),
+            'last_name' => $request->get('lname'),
+             'gender' => $request->get('gender'),
+            'address' => $request->get('address'),
+            'phone' => $request->get('phone'),
+            'user_id' => $request->get('userid'),
+            
+            'is_staff' => $request->get('staff'),
+
+        ]);
+        return ('profile edited successfully');
+       
+
+    }
+  
 
     /**
      * Show the form for editing the specified resource.
@@ -96,10 +132,7 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
+   
 
     /**
      * Update the specified resource in storage.
