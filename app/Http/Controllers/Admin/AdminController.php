@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Model\Userdetail;
 use App\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -25,8 +26,17 @@ class AdminController extends Controller
     }
     public function details()
     {
-
-        return view('Admin.updateprofile');
+        $id=Auth::user()->id;
+       $details=UserDetail::where('user_id',$id)->first();
+       if(isSet($details))
+       {
+           return redirect()->back();
+       }
+        return view('Admin.Profile.updateprofile',['details'=>$details]);
+    }
+    public function temp()
+    {
+        return view('public');
     }
     public function updatedetails(Request $request)
     {
@@ -56,7 +66,7 @@ class AdminController extends Controller
          $uid=$id;
             $admin = UserDetail::where('user_id','=' ,$uid)->get();
             
-            return view('Admin.viewprofile', ['admin' => $admin]);
+            return view('Admin.Profile.viewprofile', ['admin' => $admin]);
             
         }
 
@@ -68,6 +78,11 @@ class AdminController extends Controller
     public function create()
     {
         //
+    }
+    public function showAdmin(){
+        $admin = User::with(['userDetail','roles'])->orderBy('id','asc')->get();
+        return view('Admin.Profile.showAdmin',['admin'=>$admin]);
+
     }
 
     /**
@@ -93,7 +108,7 @@ class AdminController extends Controller
 
        $user = User::with(['userDetail'])->where('id',$id)->first();
             
-        return view('Admin.editprofile',['user' => $user]);
+        return view('Admin.Profile.editprofile',['user' => $user]);
 
     }
     public function actEditProfile(Request $request,$id)
@@ -104,10 +119,10 @@ class AdminController extends Controller
             $file = $request->file('image');
             $image = sha1(time()) . "." . $file->getClientOriginalExtension();
             $file->move('admin/images/', $image);
-            if ($addImage->images) {
+            if ($addImage->image) {
                 unlink('admin/images/' . $addImage->image);
             }
-            $addImage->images = $image;
+            $addImage->image = $image;
         }
         $addImage->update([
             'first_name' => $request->get('fname'),
@@ -120,7 +135,9 @@ class AdminController extends Controller
             'is_staff' => $request->get('staff'),
 
         ]);
-        return ('profile edited successfully');
+        $request -> session() ->flash('success-message','Profile Edited Successfully');
+        return redirect()->back();
+       
        
 
     }
@@ -152,8 +169,14 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deleteAdmin(Request $request,$id)
     {
-        //
+        $this->authorize('delete');
+    $deleteadmin= User::find($id);
+   
+    $deleteadmin->delete();
+
+        $request->session()->flash('success-message', 'Admin deleted successfully');
+        return redirect()->back(); 
     }
 }

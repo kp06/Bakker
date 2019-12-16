@@ -29,7 +29,7 @@
 
 </div>
 @endif
-            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data" method="post" action="{{Route('editprofile',[Auth::user()->id])}}">
+            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data" method="post" action="{{Route('editprofile',$user->userDetail->id)}}">
               {{csrf_field()}}
               <input type="hidden" value="{{Auth::user()->id}}" name="userid" />
               <div class="row">
@@ -46,7 +46,7 @@
                           
                             
                             <div class="file btn btn-sm btn-primary">
-                                <input type="file" name="file"/>
+                                <input type="file" name="image"/>
                             </div>
                             
                         </div>

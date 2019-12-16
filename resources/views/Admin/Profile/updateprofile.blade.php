@@ -24,11 +24,11 @@
           <div class="x_content">
             <br />
             @if(Session::has('success-message'))
-<div class="alert alert-danger">
-{{Session::get('success-message')}}
+            <div class="alert alert-danger">
+              {{Session::get('success-message')}}
 
-</div>
-@endif
+            </div>
+            @endif
             <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" enctype="multipart/form-data" method="post" action="{{Route('updateprofile')}}">
               {{csrf_field()}}
               <input type="hidden" value="{{Auth::user()->id}}" name="userid" />
@@ -47,8 +47,8 @@
                   <input type="text" id="last-name" name="lname" required="required" class="form-control">
                 </div>
               </div>
-               <div class="item form-group ">
-                <label class="col-form-label col-md-3 col-sm-3 label-align" >Gender <span class="required">*</span>
+              <div class="item form-group ">
+                <label class="col-form-label col-md-3 col-sm-3 label-align">Gender <span class="required">*</span>
                 </label>
                 <div class="checkbox mr-2 ml-2">
                   <label>
@@ -68,7 +68,7 @@
                 </div>
               </div>
 
-             
+
               <div class="item form-group">
                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Address <span class="required">*</span>
                 </label>
@@ -84,7 +84,7 @@
                 </div>
               </div>
               <div class="item form-group ">
-                <label class="col-form-label col-md-3 col-sm-3 label-align" >Is Staff <span class="required">*</span>
+                <label class="col-form-label col-md-3 col-sm-3 label-align">Is Staff <span class="required">*</span>
                 </label>
                 <div class="checkbox mr-2 ml-2">
                   <label>
@@ -97,7 +97,7 @@
                   </label>
                 </div>
               </div>
-              
+
 
 
 
@@ -109,7 +109,7 @@
                   <button type="submit" class="btn btn-success">Add Details</button>
                   <button class="btn btn-primary" type="button">Cancel</button>
                   <button class="btn btn-primary" type="reset">Reset</button>
-                  
+
                 </div>
               </div>
 
